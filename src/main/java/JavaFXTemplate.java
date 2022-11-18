@@ -12,6 +12,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -24,14 +25,20 @@ import java.util.Objects;
 public class JavaFXTemplate extends Application {
 
 	Label welcomeTitleL;
+	Label backendTitleL;
 	Label portL;
+	Label clientCounterL;
+	ListView<String> logLV;
 	TextField portTF;
 	Button setPortButton;
 	Button startServerButton;
 	Label welcomeErrorL;
 	GridPane welcomePane;
+	GridPane backendPane;
 	HBox welcomeButtonsHB;
 	Scene welcomeScene;
+	Scene backendScene;
+	int port;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -49,9 +56,17 @@ public class JavaFXTemplate extends Application {
 		portTF.setPromptText("Enter a valid port number");
 		setPortButton = new Button("Set Port");
 		startServerButton = new Button("Start Server");
+		startServerButton.setDisable(true);
 		welcomeErrorL = new Label();
 		welcomeButtonsHB = new HBox(setPortButton,startServerButton);
 		welcomeButtonsHB.setSpacing(40);
+
+		backendTitleL = new Label("Server Status");
+		clientCounterL = new Label("Online Clients: ");
+		logLV = new ListView<>();
+		logLV.getItems().add("Server Started");
+
+
 		welcomePane = new GridPane();
 		welcomePane.setVgap(5);
 		welcomePane.setHgap(5);
@@ -70,9 +85,23 @@ public class JavaFXTemplate extends Application {
 		welcomePane.add(welcomeButtonsHB,42,70);
 		welcomePane.add(welcomeErrorL,42,90);
 
+
+		backendTitleL.setStyle("-fx-font-size: 32; -fx-font-family: 'Times New Roman'");
+		GridPane.setHalignment(backendTitleL,HPos.CENTER);
+		GridPane.setValignment(clientCounterL,VPos.TOP);
+		logLV.setPrefWidth(350);
+		backendPane = new GridPane();
+		backendPane.setVgap(5);
+		backendPane.setHgap(5);
+		backendPane.add(backendTitleL,5,10);
+		backendPane.add(logLV,5,30);
+		backendPane.add(clientCounterL,20,30);
+
 	    welcomeScene = new Scene(welcomePane, 700,700);
+		backendScene = new Scene(backendPane,700,700);
 		primaryStage.setScene(welcomeScene);
 		primaryStage.setResizable(false);
+		primaryStage.setTitle("Connect Four Server");
 		primaryStage.show();
 
 
@@ -99,12 +128,22 @@ public class JavaFXTemplate extends Application {
 					welcomeErrorL.setVisible(true);
 					welcomeErrorL.setTextFill(Color.color(1,0,0));
 				} else {
-					// TODO try if port is valid
 					welcomeErrorL.setVisible(false);
 					portTF.setDisable(true);
 					setPortButton.setDisable(true);
+					startServerButton.setDisable(false);
 				}
 			}
+		});
+
+		startServerButton.setOnAction(actionEvent -> {
+			// TODO: test port
+			try {
+
+			} catch(Exception e) {
+
+			}
+			primaryStage.setScene(backendScene);
 		});
 	}
 
