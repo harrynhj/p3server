@@ -12,15 +12,18 @@ public class Server {
 
     Server(Consumer<Serializable> call, int port) {
         callback = call;
+        this.port = port;
         server = new TheServer();
         server.start();
-        this.port = port;
     }
 
     public class TheServer extends Thread {
         public void run() {
             try (ServerSocket mysocket = new ServerSocket(port)) {
-
+                callback.accept("Server Started");
+                while (true) {
+                    // TODO: get info
+                }
             } catch (Exception e) {
                 callback.accept("Invalid port number");
             }

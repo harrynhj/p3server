@@ -4,6 +4,7 @@ import javafx.animation.RotateTransition;
 import javafx.animation.SequentialTransition;
 import javafx.application.Application;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
@@ -39,6 +40,8 @@ public class JavaFXTemplate extends Application {
 	Scene welcomeScene;
 	Scene backendScene;
 	int port;
+	Server serverConnection;
+
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -127,23 +130,33 @@ public class JavaFXTemplate extends Application {
 					welcomeErrorL.setText("Invalid Port Number!");
 					welcomeErrorL.setVisible(true);
 					welcomeErrorL.setTextFill(Color.color(1,0,0));
+					portTF.clear();
 				} else {
 					welcomeErrorL.setVisible(false);
 					portTF.setDisable(true);
 					setPortButton.setDisable(true);
 					startServerButton.setDisable(false);
+					port = temp;
 				}
 			}
 		});
 
 		startServerButton.setOnAction(actionEvent -> {
 			// TODO: test port
-			try {
-
-			} catch(Exception e) {
-
-			}
-			primaryStage.setScene(backendScene);
+			serverConnection = new Server( data -> {
+				Platform.runLater(() -> {
+					if (Objects.equals(data.toString(), "Invalid port number")) {
+						welcomeErrorL.setText("Port Already In Use!");
+						welcomeErrorL.setVisible(true);
+						welcomeErrorL.setTextFill(Color.color(1,0,0));
+						setPortButton.setDisable(false);
+						portTF.clear();
+						portTF.setDisable(false);
+					} else {
+						primaryStage.setScene(backendScene);
+					}
+				});
+			},port);
 		});
 	}
 
