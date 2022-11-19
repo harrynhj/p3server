@@ -1,7 +1,3 @@
-import javafx.animation.FadeTransition;
-import javafx.animation.PauseTransition;
-import javafx.animation.RotateTransition;
-import javafx.animation.SequentialTransition;
 import javafx.application.Application;
 
 import javafx.application.Platform;
@@ -17,13 +13,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.util.Objects;
 
-public class JavaFXTemplate extends Application {
+public class ServerGui extends Application {
 
 	Label welcomeTitleL;
 	Label backendTitleL;
@@ -145,7 +139,9 @@ public class JavaFXTemplate extends Application {
 			// TODO: test port
 			serverConnection = new Server( data -> {
 				Platform.runLater(() -> {
+
 					if (Objects.equals(data.toString(), "Invalid port number")) {
+
 						welcomeErrorL.setText("Port Already In Use!");
 						welcomeErrorL.setVisible(true);
 						welcomeErrorL.setTextFill(Color.color(1,0,0));
