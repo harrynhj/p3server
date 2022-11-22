@@ -141,7 +141,6 @@ public class ServerGui extends Application {
 				Platform.runLater(() -> {
 
 					if (Objects.equals(data.toString(), "Invalid port number")) {
-
 						welcomeErrorL.setText("Port Already In Use!");
 						welcomeErrorL.setVisible(true);
 						welcomeErrorL.setTextFill(Color.color(1,0,0));
