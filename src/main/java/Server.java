@@ -28,6 +28,10 @@ public class Server {
                 callback.accept("Server Started");
                 while (true) {
                     ClientThread c = new ClientThread(mysocket.accept(), count);
+                    callback.accept("Client#" + count + "connected");
+                    clients.add(c);
+                    c.start();
+                    count++;
                 }
             } catch (Exception e) {
                 callback.accept("Invalid port number");

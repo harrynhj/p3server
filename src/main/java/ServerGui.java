@@ -149,6 +149,7 @@ public class ServerGui extends Application {
 						portTF.setDisable(false);
 					} else {
 						primaryStage.setScene(backendScene);
+						logLV.getItems().add(data.toString());
 					}
 				});
 			},port);
