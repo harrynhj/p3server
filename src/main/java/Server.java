@@ -25,7 +25,6 @@ public class Server {
     public class TheServer extends Thread {
         public void run() {
             try (ServerSocket mysocket = new ServerSocket(port)) {
-                callback.accept("Server Started");
                 while (true) {
                     ClientThread c = new ClientThread(mysocket.accept(), count);
                     callback.accept("Client#" + count + "connected");
@@ -46,6 +45,24 @@ public class Server {
             ObjectOutputStream out;
 
             ClientThread(Socket s, int count) {
+                connection = s;
+                this.count = count;
+            }
+
+            public void updateClients(CFourInfo dataPack) {
+
+            }
+
+            public void run() {
+                try {
+                    in = new ObjectInputStream(connection.getInputStream());
+                    out = new ObjectOutputStream(connection.getOutputStream());
+                    connection.setTcpNoDelay(true);
+                }catch (Exception e) {
+
+                }
+
+
             }
         }
 
