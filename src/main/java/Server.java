@@ -25,6 +25,7 @@ public class Server {
     public class TheServer extends Thread {
         public void run() {
             try (ServerSocket mysocket = new ServerSocket(port)) {
+                callback.accept("Server Started");
                 while (true) {
                     ClientThread c = new ClientThread(mysocket.accept(), count);
                     callback.accept("Client#" + count + "connected");
@@ -59,7 +60,22 @@ public class Server {
                     out = new ObjectOutputStream(connection.getOutputStream());
                     connection.setTcpNoDelay(true);
                 }catch (Exception e) {
+                    System.out.println("Streams not open");
+                }
 
+                while(true) {
+                    try {
+                        String data = in.readObject().toString();
+                        callback.accept("client: " + count + " sent: " + data);
+                        updateClients(new CFourInfo());
+
+                    }
+                    catch(Exception e) {
+                        callback.accept("OOOOPPs...Something wrong with the socket from client: " + count + "....closing down!");
+                        updateClients(new CFourInfo());
+                        clients.remove(this);
+                        break;
+                    }
                 }
 
 

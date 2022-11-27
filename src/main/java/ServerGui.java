@@ -61,7 +61,6 @@ public class ServerGui extends Application {
 		backendTitleL = new Label("Server Status");
 		clientCounterL = new Label("Online Clients: ");
 		logLV = new ListView<>();
-		logLV.getItems().add("Server Started");
 
 
 		welcomePane = new GridPane();
