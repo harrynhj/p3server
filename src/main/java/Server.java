@@ -24,17 +24,20 @@ public class Server {
 
     public class TheServer extends Thread {
         public void run() {
+            CFourInfo dataPack = new CFourInfo();
             try (ServerSocket mysocket = new ServerSocket(port)) {
-                callback.accept("Server Started");
+                dataPack.errorMessages = "Server Started";
+                callback.accept(dataPack);
                 while (true) {
                     ClientThread c = new ClientThread(mysocket.accept(), count);
-                    callback.accept("Client#" + count + "connected");
+                    callback.accept("Client# " + count + " connected");
                     clients.add(c);
                     c.start();
                     count++;
                 }
             } catch (Exception e) {
-                callback.accept("Invalid port number");
+                dataPack.errorMessages = "Invalid port number";
+                callback.accept(dataPack);
             }
         }
 
@@ -69,8 +72,7 @@ public class Server {
                         callback.accept("client: " + count + " sent: " + data);
                         updateClients(new CFourInfo());
 
-                    }
-                    catch(Exception e) {
+                    } catch(Exception e) {
                         callback.accept("OOOOPPs...Something wrong with the socket from client: " + count + "....closing down!");
                         updateClients(new CFourInfo());
                         clients.remove(this);

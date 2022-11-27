@@ -3,6 +3,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
@@ -14,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.util.Objects;
 
@@ -138,8 +140,8 @@ public class ServerGui extends Application {
 			// TODO: test port
 			serverConnection = new Server( data -> {
 				Platform.runLater(() -> {
-
-					if (Objects.equals(data.toString(), "Invalid port number")) {
+					CFourInfo dataPack = (CFourInfo) data;
+					if (Objects.equals(dataPack.errorMessages, "Invalid port number")) {
 						welcomeErrorL.setText("Port Already In Use!");
 						welcomeErrorL.setVisible(true);
 						welcomeErrorL.setTextFill(Color.color(1,0,0));
@@ -148,10 +150,18 @@ public class ServerGui extends Application {
 						portTF.setDisable(false);
 					} else {
 						primaryStage.setScene(backendScene);
-						logLV.getItems().add(data.toString());
+						logLV.getItems().add(dataPack.errorMessages);
 					}
 				});
 			},port);
+		});
+
+		primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent t) {
+				Platform.exit();
+				System.exit(0);
+			}
 		});
 	}
 
