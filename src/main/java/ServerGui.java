@@ -141,7 +141,7 @@ public class ServerGui extends Application {
 			serverConnection = new Server( data -> {
 				Platform.runLater(() -> {
 					CFourInfo dataPack = (CFourInfo) data;
-					if (Objects.equals(dataPack.errorMessages, "Invalid port number")) {
+					if (Objects.equals(dataPack.systemMessages, "Invalid port number")) {
 						welcomeErrorL.setText("Port Already In Use!");
 						welcomeErrorL.setVisible(true);
 						welcomeErrorL.setTextFill(Color.color(1,0,0));
@@ -150,7 +150,7 @@ public class ServerGui extends Application {
 						portTF.setDisable(false);
 					} else {
 						primaryStage.setScene(backendScene);
-						logLV.getItems().add(dataPack.errorMessages);
+						logLV.getItems().add(dataPack.systemMessages);
 					}
 				});
 			},port);

@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 public class CFourInfo implements Serializable {
+    public int onlinePlayers;
     public boolean p1turn;
     public boolean p1won;
     public boolean p2won;
@@ -11,11 +12,12 @@ public class CFourInfo implements Serializable {
     public int p2moveY;
     public String p1Messages;
     public String p2Messages;
-    public String errorMessages;
+    public String systemMessages;
 
     static final long serialVersionUID = 55L;
 
     CFourInfo(){
+        onlinePlayers = 0;
         p1turn = true;
         p1won = false;
         p2won = false;
@@ -26,6 +28,6 @@ public class CFourInfo implements Serializable {
         p2moveY = -1;
         p1Messages = "";
         p2Messages = "";
-        errorMessages = "";
+        systemMessages = "";
     }
 }
